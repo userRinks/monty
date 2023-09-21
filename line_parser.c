@@ -24,9 +24,11 @@ instruction_t *parse_line(char *line)
 {
 	char *opcode;
 	instruction_t *instruction;
+
 	opcode = read_opcode(line);
 
 	instruction = malloc(sizeof(*instruction));
+
 	if (instruction == NULL)
 	{
 		fprintf(stdout, "Error: malloc failed\n");
