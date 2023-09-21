@@ -2,7 +2,7 @@
 
 /**
  * free_stack - Free the list
- * @current: pointer to current head of list
+ * @current_node: pointer to current head of list
  *
  * Description: Checks list and frees elements
  * Return: (_void_)
