@@ -11,19 +11,20 @@
 void op_push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *new_node;
-	char *argument, *endptr;
-	long int push_value;
+	char *argument;
+	int push_value;
 
 	/* Get the integer value from the command argument */
 	argument = strtok(NULL, "\n \t");
 
 	/* Check if the argument is a valid integer */
-	push_value = strtol(argument, &endptr, 10);
-	if (*endptr != '\0' || *argument == '\0')
+	if (!is_integer(argument))
 	{
 		fprintf(stdout, "L%u: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
+
+	push_value = atoi(argument);
 
 	/* Allocate memory for the new node */
 	new_node = malloc(sizeof(stack_t));
@@ -34,21 +35,14 @@ void op_push(stack_t **stack, unsigned int line_number)
 	}
 	new_node->n = push_value;
 	new_node->prev = NULL;
-	new_node->next = NULL;
+	new_node->next = *stack;
 
 	/* Check if the stack is empty */
-	if (*stack == NULL)
+	if (*stack != NULL)
 	{
-		*stack = new_node;
-	}
-
-	else
-	{
-		/* Add the new node to the top of the stack */
-		new_node->next = *stack;
 		(*stack)->prev = new_node;
-		*stack = new_node;
 	}
+	*stack = new_node;
 }
 
 /**
@@ -62,12 +56,10 @@ void op_push(stack_t **stack, unsigned int line_number)
  */
 void op_pall(stack_t **stack, unsigned int line_number)
 {
-	stack_t *current_node;
+	stack_t *current_node = *stack;
 
 	/* Anticipate/remove unused parameter warning */
 	UNUSED(line_number);
-
-	current_node = *stack;
 
 	while (current_node != NULL)
 	{
