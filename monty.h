@@ -58,9 +58,15 @@ void op_nop(stack_t **stack, unsigned int line_number);
 /* Open, validate and process files */
 FILE *open_and_validate_file(char *file_path);
 void process_file(FILE *my_input);
+int skip_line(instruction_t *instruction, char **line);
+int execute_instruction(instruction_t *instruction,
+		stack_t **top, unsigned int line_number);
+void handle_unknown_instruction(instruction_t *instruction,
+		unsigned int line_number, FILE *my_input, stack_t *top);
 
 /* monty */
 int check_argument_count(int argc);
+int is_integer(char *str);
 instruction_t *parse_line(char *line);
 
 #endif /*monty.h*/
